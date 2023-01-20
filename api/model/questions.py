@@ -1,25 +1,15 @@
 from sqlalchemy.types import Text
-from core.split import SplitSDK
 from app import db
-
-split = SplitSDK()
 
 
 class QuestionsQuestion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
-
-    treatment = split.get_treatment('CUSTOMER_ID', 'show_tags')
-
-    if treatment == "on":
-        content = db.Column(Text)
+    content = db.Column(Text)
 
     def __init__(self, title, content):
         self.title = title
-
-        treatment = split.get_treatment('CUSTOMER_ID', 'show_tags')
-        if treatment == "on":
-            self.content = content
+        self.content = content
 
     def __repr__(self):
         return '<User %r>' % self.name
@@ -28,9 +18,6 @@ class QuestionsQuestion(db.Model):
         question_dict = {
             'id': self.id,
             'title': self.title,
+            'content': self.content,
         }
-
-        treatment = split.get_treatment('CUSTOMER_ID', 'show_tags')
-        if treatment == "on":
-            question_dict['content'] = self.content
         return question_dict
