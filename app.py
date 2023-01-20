@@ -9,6 +9,7 @@ db = SQLAlchemy()
 
 def create_app():
     from api.route.questions import questions_api
+    from api.route.encrypt import encryption_bp
 
     app = Flask(__name__)
 
@@ -19,6 +20,7 @@ def create_app():
     # Initialize Config
     app.config.from_pyfile('config.py')
     app.register_blueprint(questions_api, url_prefix='/api')
+    app.register_blueprint(encryption_bp, url_prefix='/api')
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{}:{}@{}:{}/{}'.format(
         os.getenv('DB_USER'),
