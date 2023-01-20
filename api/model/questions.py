@@ -9,7 +9,7 @@ class QuestionsQuestion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
 
-    treatment = split.get_treatment('CUSTOMER_ID', 'show_tags')
+    treatment = split.get_treatment('*', 'question-content')
 
     if treatment == "on":
         content = db.Column(Text)
@@ -17,7 +17,7 @@ class QuestionsQuestion(db.Model):
     def __init__(self, title, content):
         self.title = title
 
-        treatment = split.get_treatment('CUSTOMER_ID', 'show_tags')
+        treatment = split.get_treatment('*', 'question-content')
         if treatment == "on":
             self.content = content
 
@@ -30,7 +30,7 @@ class QuestionsQuestion(db.Model):
             'title': self.title,
         }
 
-        treatment = split.get_treatment('CUSTOMER_ID', 'show_tags')
+        treatment = split.get_treatment('*', 'question-content')
         if treatment == "on":
             question_dict['content'] = self.content
         return question_dict
